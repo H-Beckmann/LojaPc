@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<ui:composition template="template.xhtml">
+<ui:define name="conteudo">
+
+	<h:messages 
+		errorStyle="color:red" 
+		warnStyle="color:orange" 
+		infoStyle="color:green"
+		globalOnly="false"/>
+		
+	<h1>.:Cadastro de Peças:.</h1>
+	<h:form>
+		<h:panelGrid columns="2">
+		<h:outputLabel value="Nome:" />
+			<h:panelGroup>
+				<h:inputText 
+					id="itNome" 
+					value="#{cadastroPecaController.entity.nome}" />
+				<h:message for="itNome" style="color:red"/>
+			</h:panelGroup>
+		
+			<h:outputLabel value="Descrição:" />
+			<h:panelGroup>
+				<h:inputText 
+					id="itDescricao" 
+					value="#{cadastroPecaController.entity.desc}" />
+				<h:message for="itDescricao" style="color:red"/>
+			</h:panelGroup>
+
+			<h:outputLabel value="Preço:" />
+			<h:panelGroup>
+				<h:inputText 
+					id="itPreco" 
+					value="#{cadastroPecaController.entity.preco}" />
+				<h:message for="itPreco" style="color:red"/>
+			</h:panelGroup>	
+			
+			<h:outputLabel value="Categoria:" />
+			<h:selectOneMenu 
+				value="#{cadastroPecaController.entity.categoriaPeca}">
+				<f:selectItems 
+					value="#{cadastroPecaController.listaCategoria}"
+							var="tipo" 
+							itemLabel="#{tipo.label}"/>
+			</h:selectOneMenu>							
+
+		
+		</h:panelGrid>
+		<h:commandButton value="Incluir"
+			disabled="#{cadastroPecaController.entity.id != null}"
+			actionListener="#{cadastroPecaController.incluir}" />
+		<h:commandButton value="Alterar"
+			disabled="#{cadastroPecaController.entity.id == null}"
+			actionListener="#{cadastroPecaController.alterar}" />
+		<h:commandButton value="Excluir"
+			disabled="#{cadastroPecaController.entity.id == null}"
+			actionListener="#{cadastroPecaController.remover}" >
+			<f:ajax execute="@this" render="@form formDataTable"/>
+		</h:commandButton>
+		<h:commandButton value="Limpar" 
+			actionListener="#{cadastroPecaController.limpar}">
+			<f:ajax execute="@this" render="@form"/>
+		</h:commandButton>		
+	</h:form>
+</ui:define>
+</ui:composition>
+</html>
