@@ -30,7 +30,7 @@ public class Filtro implements Filter {
 //		// imprime o endereco da pagina
 //		String endereco = servletRequest.getRequestURI();
 //		System.out.println(endereco);
-//		if (endereco.equals("/books/faces/login2.xhtml")) {
+//		if (endereco.equals("/LojaPc/faces/login.xhtml")) {
 //			chain.doFilter(request, response);
 //			return;
 //		}
@@ -43,7 +43,7 @@ public class Filtro implements Filter {
 //			usu = (Usuario) session.getAttribute("usuarioLogado");
 //		
 //		if (usu == null) {
-//			((HttpServletResponse) response).sendRedirect("/books/faces/login2.xhtml");
+//			((HttpServletResponse) response).sendRedirect("/LojaPc/faces/login.xhtml");
 //		}  else {
 //			// nesse local podemos trabalhar as permissoes por pagina
 //
