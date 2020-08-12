@@ -1,73 +1,96 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
-<h:head>
-	<title>Cadastro de Usuário</title>
-</h:head>
-<h:body>
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:composition template="index.xhtml">
+<ui:define name="conteudo">
+
 	<h:messages 
-		errorStyle="color:red" 
+		errorStyle="color:black" 
 		warnStyle="color:orange" 
 		infoStyle="color:green"
-		globalOnly="false"/>
-		
-	<h1>.:Cadastro de Usuário:.</h1>
-	<h:form>
-		<h:panelGrid columns="2">
-			<h:outputLabel value="Nome:" />
-			<h:panelGroup>
-				<h:inputText 
-					id="itNome" 
-					required="true"
-					requiredMessage="Esse campo não pode ser nulo."
-					value="#{cadastroUsuarioController.entity.nome}" />
-				<h:message for="itNome" style="color:red"/>
-			</h:panelGroup>
-			
-			<h:outputLabel value="Login:" />
-			<h:inputText value="#{cadastroUsuarioController.entity.login}" />
-			
-			<h:outputLabel value="Senha:" />
-			<h:panelGroup>
-				<h:inputSecret 
-					id="isSenha"
-					value="#{cadastroUsuarioController.entity.senha}" 
-					required="true"
-					requiredMessage="Esse campo não pode ser nulo."/>
-				<h:message for="isSenha" style="color:red"/>	
- 			</h:panelGroup>
- 			
-			<h:outputLabel value="Data de Nascimento:" />
-			<h:panelGroup>
-				<h:inputText id="itDataNascimento" 
-				value="#{cadastroUsuarioController.entity.dataNascimento}">
-					<f:convertDateTime pattern="dd/MM/yyyy" 
-									   type="localDate"/>
-				</h:inputText>
-				<h:message for="itDataNascimento" style="color:red"/>
-			</h:panelGroup>
-		
-		</h:panelGrid>
-		<h:commandButton value="Incluir"
-			disabled="#{cadastroUsuarioController.entity.id != null}"
-			actionListener="#{cadastroUsuarioController.incluir}" />
-		<h:commandButton value="Alterar"
-			disabled="#{cadastroUsuarioController.entity.id == null}"
-			actionListener="#{cadastroUsuarioController.alterar}" />
-		<h:commandButton value="Excluir"
-			disabled="#{cadastroUsuarioController.entity.id == null}"
-			actionListener="#{cadastroUsuarioController.remover}" >
-			<f:ajax execute="@this" render="@form formDataTable"/>
-		</h:commandButton>
-		<h:commandButton value="Limpar" 
-			actionListener="#{cadastroUsuarioController.limpar}">
-			<f:ajax execute="@this" render="@form"/>
-		</h:commandButton>		
-	</h:form>
+		globalOnly="false"
+		style="list-style-type: none"/>
+		<div>
+		<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-6 col-md-auto login-box">		
+				<h1 class="text-center wdi-red">Cadastro de usuários</h1>
+				<hr />
+				<h:form>
+					<div class="form-row">
+					
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Nome:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo nome não pode ser nulo" styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.nome}" />
+						</div>
+						
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Login:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo login não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.login}" />
+						</div>
+						
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Senha:"  styleClass="wdi-red"/>
+							<h:inputSecret required="true"
+					requiredMessage="O campo senha não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.senha}" />
+						</div>
+						
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Data de Nascimento:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo data de nascimento não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" 
+									   type="localDate"/> </h:inputText>
+						</div>
+						<div style="margin-bottom:10px">
+							<h:outputLabel value="Tipo de Usuário:" />
+								<h:selectOneMenu 
+									value="#{cadastroUsuarioController.entity.tipoUsuario}">
+							<f:selectItems 
+								value="#{cadastroUsuarioController.listaTipoUsuario}"
+								var="tipo" 
+								itemLabel="#{tipo.label}"/>
+							</h:selectOneMenu>
+						</div>
+						
+						<div style="display:flex;margin-bottom:10px">
+						<h:commandButton value="Incluir"
+							styleClass="btn btn-secondary"
+							actionListener="#{cadastroUsuarioController.incluir}" />
+        				<h:commandButton value="Alterar"
+        					styleClass="btn btn-secondary"
+            				disabled="#{cadastroUsuarioController.entity.id == null}"
+            				actionListener="#{cadastroUsuarioController.alterar}" />
+        				<h:commandButton value="Excluir"
+        					styleClass="btn btn-secondary"
+           					disabled="#{cadastroUsuarioController.entity.id == null}"
+           					actionListener="#{cadastroUsuarioController.remover}" >
+            				<f:ajax execute="@this" render="@form formDataTable"/>
+        				</h:commandButton>
+        				<h:commandButton value="Limpar" 
+        					styleClass="btn btn-secondary"
+            				actionListener="#{cadastroUsuarioController.limpar}">
+            				<f:ajax execute="@this" render="@form"/>
+        				</h:commandButton>
+        				</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:20px">
 	<h:form id="formDataTable">
 		<h:dataTable id="dataTable" value="#{cadastroUsuarioController.listaUsuario}" 
-					 var="obj">
+					 var="obj" styleClass="table table-striped table-hover" style="position:right">
 			   <h:column>            
 			      <f:facet name="header">Id</f:facet>            
 			      <h:outputLabel value="#{obj.id}"/>
@@ -83,17 +106,24 @@
 			   <h:column>
 			      <f:facet name="header">Data de Nascimento</f:facet>
 			      <h:outputLabel value="#{obj.dataNascimento}">
-	      				<f:convertDateTime pattern="dd-MM-yyyy" 
+	      				<f:convertDateTime pattern="dd/MM/yyyy" 
 						   type="localDate"/>
 			      
 			      </h:outputLabel>
+			   </h:column>
+			    <h:column>
+			      <f:facet name="header">Tipo do Usuario</f:facet>
+			      <h:outputLabel value="#{obj.tipoUsuario.label}"/>
 			   </h:column>			   			   
 			   <h:column>
 			      <f:facet name="header">Ação</f:facet>
-			      <h:commandLink value="Editar" 
+			      <h:commandLink styleClass="btn btn-secondary" value="Editar" 
 			      		actionListener="#{cadastroUsuarioController.editar(obj)}"/>
 			   </h:column>		   
 		</h:dataTable>
 	</h:form>
-</h:body>
+	</div>
+	</div>
+	</ui:define>
+</ui:composition>
 </html>

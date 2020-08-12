@@ -25,6 +25,8 @@ public class ConsultaPecaController implements Serializable{
 		PecaDAO dao = new PecaDAO();
 		if (tipoFiltro == 1)
 			listaPeca = dao.findByDescricao(getFiltro());
+		else if(tipoFiltro==2)
+			listaPeca=dao.findByNome(getFiltro());
 	}
 	
 	public String novaPeca() {

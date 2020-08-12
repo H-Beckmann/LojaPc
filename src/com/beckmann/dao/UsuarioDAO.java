@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.beckmann.model.TipoUsuario;
 import com.beckmann.model.Usuario;
 
 public class UsuarioDAO extends DAO<Usuario> {
@@ -18,9 +19,9 @@ public class UsuarioDAO extends DAO<Usuario> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO usuario ");
-		sql.append("	(nome, login, senha, data_nasc) ");
+		sql.append("	(nome, login, senha, data_nasc, tipousu) ");
 		sql.append("VALUES ");
-		sql.append("	( ? , ? , ? , ?) ");
+		sql.append("	( ? , ? , ? , ?, ?) ");
 		
 		PreparedStatement stat = null;
 		try {
@@ -29,6 +30,10 @@ public class UsuarioDAO extends DAO<Usuario> {
 			stat.setString(2, usuario.getLogin());
 			stat.setString(3, usuario.getSenha());
 			stat.setDate(4, java.sql.Date.valueOf(usuario.getDataNascimento()));
+			if(usuario.getTipoUsuario()!=null)
+				stat.setInt(5, usuario.getTipoUsuario().getId());
+			else
+				stat.setInt(5, 2);
 			
 			stat.execute();
 			
@@ -54,7 +59,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE usuario ");
-		sql.append("	SET nome=?, login=?, senha=?, data_nasco=? ");
+		sql.append("	SET nome=?, login=?, senha=?, data_nasco=?, tipousu=? ");
 		sql.append("WHERE ");
 		sql.append("	id = ? ");
 		
@@ -65,7 +70,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 			stat.setString(2, usuario.getLogin());
 			stat.setString(3, usuario.getSenha());
 			stat.setDate(4, java.sql.Date.valueOf(usuario.getDataNascimento()));
-			stat.setInt(5, usuario.getId());
+			stat.setInt(5, usuario.getTipoUsuario().getId());
+			stat.setInt(6, usuario.getId());
 			
 			stat.execute();
 			
@@ -124,7 +130,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, nome, login, senha, data_nasc");
+		sql.append(" 	id, nome, login, senha, data_nasc, tipousu ");
 		sql.append("FROM ");
 		sql.append("	usuario ");
 		
@@ -142,8 +148,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataNascimento(rs.getDate("datanascimento").toLocalDate());
-				
+				usuario.setDataNascimento(rs.getDate("data_nasc").toLocalDate());
+				usuario.setTipoUsuario(TipoUsuario.valueOf(rs.getInt("tipousu")));
 				listaUsuario.add(usuario);
 			}
 			
@@ -163,7 +169,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, nome, login, senha, data_nasc");
+		sql.append(" 	id, nome, login, senha, data_nasc, tipousu ");
 		sql.append("FROM ");
 		sql.append("	usuario ");
 		sql.append("WHERE ");
@@ -183,7 +189,9 @@ public class UsuarioDAO extends DAO<Usuario> {
 				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataNascimento(rs.getDate("datanascimento").toLocalDate());
+				usuario.setDataNascimento(rs.getDate("data_nasc").toLocalDate());
+				usuario.setTipoUsuario(TipoUsuario.valueOf(rs.getInt("tipousu")));
+
 			}
 			
 		} catch (SQLException e) {
@@ -202,7 +210,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, nome, login, senha, data_nasc");
+		sql.append(" 	id, login, nome, senha, data_nasc, tipousu ");
 		sql.append("FROM ");
 		sql.append("	usuario ");
 		sql.append("WHERE ");
@@ -220,10 +228,11 @@ public class UsuarioDAO extends DAO<Usuario> {
 			while(rs.next()) {
 				usuario = new Usuario();
 				usuario.setId(rs.getInt("id"));
-				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
+				usuario.setNome(rs.getString("nome"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataNascimento(rs.getDate("datanascimento").toLocalDate());
+				usuario.setDataNascimento(rs.getDate("data_nasc").toLocalDate());
+				usuario.setTipoUsuario(TipoUsuario.valueOf(rs.getInt("tipousu")));
 			}
 			
 		} catch (SQLException e) {

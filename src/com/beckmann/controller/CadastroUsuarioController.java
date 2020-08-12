@@ -3,12 +3,15 @@ package com.beckmann.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
 import com.beckmann.application.Util;
 import com.beckmann.dao.UsuarioDAO;
 import com.beckmann.model.Usuario;
+
+import com.beckmann.model.TipoUsuario;
 
 @Named
 @ViewScoped
@@ -19,6 +22,10 @@ public class CadastroUsuarioController extends Controller<Usuario> implements Se
 	
 	public CadastroUsuarioController() {
 		super(new UsuarioDAO());
+		Flash flash = FacesContext.getCurrentInstance().
+				getExternalContext().getFlash();
+		flash.keep("flasUsuario");
+		entity = (Usuario) flash.get("flashUsuario");
 	}
 	
 	@Override
@@ -49,11 +56,12 @@ public class CadastroUsuarioController extends Controller<Usuario> implements Se
 			Util.addErrorMessage("O campo nome deve ser informado.");
 			return false;
 		}
-		
-		// gerando o hash da senha
 		String senha = Util.hashSHA256(getEntity().getSenha());
 		getEntity().setSenha(senha);
 		
 		return true;
+	}
+	public TipoUsuario[] getListaTipoUsuario() {
+		return TipoUsuario.values();
 	}
 }

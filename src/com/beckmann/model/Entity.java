@@ -3,6 +3,7 @@ package com.beckmann.model;
 import java.io.Serializable;
 
 public class Entity<T> implements Cloneable, Serializable {
+
 	private static final long serialVersionUID = -1652752761910780038L;
 	private Integer id;
 	

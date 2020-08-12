@@ -6,7 +6,14 @@ public class Peca extends Entity<Peca>{
 	private String desc;
 	private float preco;
 	private CategoriaPeca categoriaPeca;
+	private int estoque;
 	
+	public int getEstoque() {
+		return estoque;
+	}
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
 	public String getNome() {
 		return nome;
 	}

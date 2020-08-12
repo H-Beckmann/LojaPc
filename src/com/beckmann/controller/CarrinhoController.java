@@ -26,36 +26,40 @@ public class CarrinhoController implements Serializable{
 	public Venda getVenda() {
 		if (venda == null) 
 			venda = new Venda();
-		// obtendo o carrinho da sessao
 		List<ItemVenda> carrinho = (ArrayList<ItemVenda>)Sessao.getInstance().getAttribute("carrinho");
-		// adicionando os itens do carrinho na venda
 		if (carrinho == null)
 			carrinho = new ArrayList<ItemVenda>();
 		venda.setListaItemVenda(carrinho);
 		return venda;
 	}
 	
-	public void remover(int idProduto) {
-		//implementar
+	public void remove(int idProduto) {
+		List<ItemVenda> carrinho = (ArrayList<ItemVenda>) Sessao.getInstance().getAttribute("carrinho");
+        int cont = 0;
+        for (ItemVenda itemVenda : carrinho) {
+            if (itemVenda.getPeca().getId() == idProduto) {
+                carrinho.remove(cont);
+                break;
+            }
+            cont++;
+        }
 	}
 	
 	public void finalizar() {
 		Usuario usuario = (Usuario)Sessao.getInstance().getAttribute("usuarioLogado");
 		if (usuario == null) {
-			Util.addWarningMessage("Eh preciso estar logado para realizar uma venda. Faca o Login!!");
+			Util.addWarningMessage("É preciso estar logado para realizar uma venda. Faca o Login!!");
 			return;
 		}
-		// montar a venda
+
 		Venda venda = new Venda();
 		venda.setData(LocalDate.now());
 		venda.setUsuario(usuario);
 		List<ItemVenda> carrinho = (ArrayList<ItemVenda>)  Sessao.getInstance().getAttribute("carrinho");
 		venda.setListaItemVenda(carrinho);
-		// salvar no banco
 		VendaDAO dao = new VendaDAO();
 		if (dao.create(venda)) {
 			Util.addInfoMessage("Venda realizada com sucesso.");
-			// limpando o carrinho
 			Sessao.getInstance().setAttribute("carrinho", null);
 		} else {
 			Util.addErrorMessage("Erro ao finalizar a Venda.");

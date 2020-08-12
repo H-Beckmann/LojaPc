@@ -1,55 +1,87 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta charset="utf-8" name="viewport"
-		content="width=device-width, initial-scale=1"
-		http-equiv="X-UA-Conpatible" />
-	<h:outputStylesheet library="css" name="bootstrap.min.css" />
-	<h:outputStylesheet library="css" name="template.css"/>  
-</h:head>
-
-<h:body>
-	 <div class="wrapper">
-	 	<div class="box navbar header">
-			<h1 >.: Pc Store :.</h1>
-			<div >
-				<h:form>
-					<h:outputLabel value="Olá #{principalController.usuarioLogado.nome}"
-						rendered="#{principalController.usuarioLogado != null}"/>
-					<h:commandLink value=" (Sair)"   
-						action="#{principalController.encerrarSessao}"
-						rendered="#{principalController.usuarioLogado != null}"
-						style="color:white"/>
-				</h:form>
-			</div>
-	 	</div>
-		<div class="box sidebar" style="text-align: center;">
-			<ui:insert name="menu">
-				<h1>Menu</h1>
-				<h:form>
-					<h:commandLink value="Login" action="login.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Cadastro de Usuário" action="cadastrousuario.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Cadastro de peca" action="consultapeca.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Venda de Pecas" action="vendapeca.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Carrinho" action="carrinho.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Histórico de Venda" action="historico.xhtml?faces-redirect=true"/> <br/>
-						
-				</h:form>
-			</ui:insert>
-		</div>
-		<div class="box content">
-			<br/>
-			<ui:insert name="conteudo">
-				<div align="center">
-					<h1>TÓPICOS EM PROGRAMAÇÃO I</h1>
-				</div>
-			</ui:insert>
-		</div>
-		<div class="box footer" style="text-align: center;">
-			<h:outputText value="2020 - UNITINS - Todos os direitos reservados." />
-		</div>
-	</div>
-</h:body>
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Beckmann Hardware</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- Third party plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <h:outputStylesheet library="css" name="styles.css" />
+    </h:head>
+    <h:body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="principal.xhtml?faces-redirect=true">Beckmann Hardware</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item"><h:commandLink 
+                        	rendered="#{principalController.usuarioLogado != null and 
+                        		(principalController.usuarioLogado.tipoUsuario.id == 1)}">
+                        		<a class="nav-link js-scroll-trigger" 
+                        		href="cadastrousuario.xhtml?faces-redirect=true">Cadastro de usuario</a></h:commandLink></li>
+                        <li class="nav-item"><h:commandLink
+                        	rendered="#{principalController.usuarioLogado != null and 
+                        		(principalController.usuarioLogado.tipoUsuario.id == 1)}">
+                        	<a class="nav-link js-scroll-trigger" 
+                        	href="consultapeca.xhtml?faces-redirect=true">Consulta de pecas</a></h:commandLink></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="vendapeca.xhtml?faces-redirect=true">Venda de pecas</a></li>
+                    	<li class="nav-item"><a class="nav-link js-scroll-trigger" href="carrinho.xhtml?faces-redirect=true">Carrinho</a></li>
+                    	<li class="nav-item"><a class="nav-link js-scroll-trigger" href="historico.xhtml?faces-redirect=true">Histórico</a></li>
+                        <li class="nav-item"><h:commandLink rendered="#{principalController.usuarioLogado == null}"><a class="nav-link js-scroll-trigger" href="login.xhtml?faces-redirect=true">Login/Registro</a></h:commandLink></li>
+                    	<h:form>
+							<h:outputLabel value="Olá #{principalController.usuarioLogado.nome}"
+								rendered="#{principalController.usuarioLogado != null}"/>
+							<h:commandLink value=" (Sair)"   
+								action="#{principalController.encerrarSessao}"
+								rendered="#{principalController.usuarioLogado != null}"
+								style="color:white"/>
+					</h:form>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container h-50">
+                <div class="row h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-10 align-self-end">
+                        <h1 class="text-uppercase text-white font-weight-bold">A melhor loja de componentes, as melhors peças pelo melhor preço</h1>
+                        <hr class="divider my-4" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 font-weight-light mb-5">Monte um pc do seu jeito!</p>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="vendapeca.xhtml?faces-redirect=true">Comece a comprar</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container"><div class="small text-center text-muted">2020 - UNITINS - Todos os direitos reservados.</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </h:body>
 </html>

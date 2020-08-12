@@ -8,7 +8,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Util {
 	
 	private Util() {
-		// para nao permitir uma instancia
 	}
 	
 	public static String hashSHA256(String valor) {

@@ -19,9 +19,9 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO peca ");
-		sql.append("	(nome, desc, preco, categoria) ");
+		sql.append("	(nome, description, preco, categoria, estoque) ");
 		sql.append("VALUES ");
-		sql.append("	( ? , ? , ? , ? ) ");
+		sql.append("	(?, ?, ?, ?, ?) ");
 		
 		PreparedStatement stat = null;
 		try {
@@ -30,6 +30,7 @@ public class PecaDAO extends DAO<Peca> {
 			stat.setString(2, peca.getDesc());
 			stat.setFloat(3, peca.getPreco());
 			stat.setInt(4, peca.getCategoriaPeca().getId());
+			stat.setInt(5, peca.getEstoque());
 			
 			stat.execute();
 			
@@ -55,7 +56,7 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE peca ");
-		sql.append("	SET nome=?, desc=?, preco=?, categoria=? ");
+		sql.append("	SET nome=?, description=?, preco=?, categoria=? ");
 		sql.append("WHERE ");
 		sql.append("	id = ? ");
 		
@@ -125,7 +126,7 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, nome, desc, preco, categoria ");
+		sql.append(" 	id, nome, description, preco, categoria, estoque ");
 		sql.append("FROM ");
 		sql.append("	peca ");
 		
@@ -140,9 +141,11 @@ public class PecaDAO extends DAO<Peca> {
 			while(rs.next()) {
 				peca = new Peca();
 				peca.setId(rs.getInt("id"));
-				peca.setDesc(rs.getString("descricao"));
+				peca.setNome(rs.getString("nome"));
+				peca.setDesc(rs.getString("description"));
 				peca.setPreco(rs.getFloat("preco"));
-				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("preco")));
+				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("categoria")));
+				peca.setEstoque(rs.getInt("estoque"));
 				listaLivro.add(peca);
 			}
 			
@@ -162,12 +165,12 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, desc, preco, categoria ");
+		sql.append(" 	id, nome, description, preco, categoria, estoque ");
 		sql.append("FROM ");
 		sql.append("	peca ");
 		sql.append("WHERE ");
-		sql.append("	desc ilike ? ");
-		sql.append("ORDER BY desc ");
+		sql.append("	description ilike ? ");
+		sql.append("ORDER BY description ");
 		
 		PreparedStatement stat = null;
 		try {
@@ -181,9 +184,11 @@ public class PecaDAO extends DAO<Peca> {
 			while(rs.next()) {
 				peca = new Peca();
 				peca.setId(rs.getInt("id"));
-				peca.setDesc(rs.getString("descricao"));
+				peca.setNome(rs.getString("nome"));
+				peca.setDesc(rs.getString("description"));
 				peca.setPreco(rs.getFloat("preco"));
-				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("estoque")));
+				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("categoria")));
+				peca.setEstoque(rs.getInt("estoque"));
 				listaLivro.add(peca);
 			}
 			
@@ -195,7 +200,50 @@ public class PecaDAO extends DAO<Peca> {
 			closeConnection(conn);
 		}
 		return listaLivro;
-	}		
+	}	
+	
+	public List<Peca> findByNome(String nome) {
+		List<Peca> listaLivro = new ArrayList<Peca>();
+		Connection conn = getConnection();
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append(" 	id, nome, description, preco, categoria, estoque ");
+		sql.append("FROM ");
+		sql.append("	peca ");
+		sql.append("WHERE ");
+		sql.append("	nome ilike ? ");
+		sql.append("ORDER BY nome ");
+		
+		PreparedStatement stat = null;
+		try {
+			stat = conn.prepareStatement(sql.toString());
+			stat.setString(1, "%" + nome + "%");
+			
+			ResultSet rs = stat.executeQuery();
+			
+			Peca peca = null;
+			
+			while(rs.next()) {
+				peca = new Peca();
+				peca.setId(rs.getInt("id"));
+				peca.setNome(rs.getString("nome"));
+				peca.setDesc(rs.getString("description"));
+				peca.setPreco(rs.getFloat("preco"));
+				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("categoria")));
+				peca.setEstoque(rs.getInt("estoque"));
+				listaLivro.add(peca);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			rollback(conn);
+		} finally {
+			closeStatement(stat);
+			closeConnection(conn);
+		}
+		return listaLivro;
+	}
 	
 	public Peca findById(int id) {
 		Peca peca = null;
@@ -203,7 +251,7 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append(" 	id, desc, preco, categoria ");
+		sql.append(" 	id, description, preco, categoria, estoque ");
 		sql.append("FROM ");
 		sql.append("	peca ");
 		sql.append("WHERE ");
@@ -220,9 +268,10 @@ public class PecaDAO extends DAO<Peca> {
 			while(rs.next()) {
 				peca = new Peca();
 				peca.setId(rs.getInt("id"));
-				peca.setDesc(rs.getString("descricao"));
+				peca.setDesc(rs.getString("description"));
 				peca.setPreco(rs.getFloat("preco"));
-				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("estoque")));
+				peca.setCategoriaPeca(CategoriaPeca.valueOf(rs.getInt("categoria")));
+				peca.setEstoque(rs.getInt("estoque"));
 			}
 			
 		} catch (SQLException e) {

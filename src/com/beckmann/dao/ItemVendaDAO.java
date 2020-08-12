@@ -18,8 +18,8 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 		Connection conn = getConnection();
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO public.itemVenda ");
-		sql.append("	(valor, idvenda, idlivro) ");
+		sql.append("INSERT INTO public.itemvenda ");
+		sql.append("	(valor, idvenda, idpeca) ");
 		sql.append("VALUES ");
 		sql.append("	(?, ?, ?) ");
 		
@@ -55,16 +55,15 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 		sql.append("SELECT ");
 		sql.append("  v.id, ");
 		sql.append("  v.valor, ");
-		sql.append("  v.idlivro, ");
-		sql.append("  l.descricao, ");
-		sql.append("  l.isbn, ");
-		sql.append("  l.preco, ");
-		sql.append("  l.estoque ");
-		sql.append("FROM ");
+		sql.append("  v.idpeca, ");
+		sql.append(" l.nome, ");
+		sql.append("  l.description, ");
+		sql.append("  l.preco ");
+		sql.append("  FROM  ");
 		sql.append("  public.itemvenda v, ");
-		sql.append("  public.livro l ");
+		sql.append("  public.peca l ");
 		sql.append("WHERE ");
-		sql.append("  v.idlivro = l.id AND ");
+		sql.append("  v.idpeca = l.id AND ");
 		sql.append("  v.idvenda = ? ");
 		
 		PreparedStatement stat = null;
@@ -82,7 +81,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 				Peca peca= new Peca();
 				peca.setId(rs.getInt("id"));
 				peca.setNome(rs.getString("nome"));
-				peca.setDesc(rs.getString("descricao"));
+				peca.setDesc(rs.getString("description"));
 				peca.setPreco(rs.getFloat("preco"));
 				
 				

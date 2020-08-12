@@ -20,9 +20,7 @@ public class LoginController {
 				Util.hashSHA256(getUsuario().getSenha()));
 		
 		if (usuario != null) {
-			// adicionando um ussuario na sessao
 			Sessao.getInstance().setAttribute("usuarioLogado", usuario);
-			// redirecionando para o template
 			return "principal.xhtml?faces-redirect=true";
 		}
 		Util.addErrorMessage("Login ou Senha inválido.");

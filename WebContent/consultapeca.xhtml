@@ -4,7 +4,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-<ui:composition template="principal.xhtml">
+<ui:composition template="index.xhtml">
 <ui:define name="conteudo">
 
 	<h:messages 
@@ -13,19 +13,22 @@
 		infoStyle="color:green"
 		globalOnly="false"/>
 		
-	<h1>.:Consulta de Peças:.</h1>
+	<h1 class="text-center wdi-red">Consulta de peças</h1>
+	<hr />
 	<h:form>
 		<h:panelGrid columns="3">
-			<h:selectOneMenu value="#{consultaPecaController.tipoFiltro}">
-			   <f:selectItem itemValue="1" itemLabel="Descrição" />                 
+			<h:selectOneMenu styleClass="btn btn-secondary" style="margin-bottom:10px" value="#{consultaPecaController.tipoFiltro}">
+			   <f:selectItem itemValue="1" itemLabel="Descrição" />
+			   <f:selectItem itemValue="2" itemLabel="Nome" />                 
 			</h:selectOneMenu>
 			<h:panelGroup>
 				<h:inputText 
 					value="#{consultaPecaController.filtro}" />
 			</h:panelGroup>
-			<h:commandButton value="Pesquisar"
+			<h:commandButton styleClass="btn btn-secondary" style="margin-bottom:10px" value="Pesquisar"
 				actionListener="#{consultaPecaController.pesquisar}" />
-			<h:commandButton value="+ Nova Peça"
+				
+			<h:commandButton styleClass="btn btn-secondary" value="+ Nova Peça"
 				action="#{consultaPecaController.novaPeca}" />
 		
 		</h:panelGrid>
@@ -44,11 +47,17 @@
 			   </h:column>
 			   <h:column>
 			      <f:facet name="header">Preço</f:facet>
-			      <h:outputLabel value="#{obj.preco}"/>
+			      <h:outputLabel value="#{obj.preco}">
+						<f:convertNumber  locale="pt_BR" currencySymbol="R$" type="currency"/>
+					</h:outputLabel>
+			   </h:column>
+			   <h:column>
+			      <f:facet name="header">Estoque</f:facet>
+			      <h:outputLabel value="#{obj.estoque}"/>
 			   </h:column>
 			   <h:column>
 			      <f:facet name="header">Ação</f:facet>
-			      <h:commandLink value="Editar" 
+			      <h:commandLink styleClass="btn btn-info" value="Editar" 
 			      		action="#{consultaPecaController.editar(obj)}"/>
 			   </h:column>		   
 		</h:dataTable>

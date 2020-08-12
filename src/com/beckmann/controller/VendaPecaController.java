@@ -25,32 +25,23 @@ public class VendaPecaController implements Serializable {
 		listaPeca = null;
 	}
 	
-	public void adicionar(int idLivro) {
+	public void adicionar(int idPeca) {
 		PecaDAO dao = new PecaDAO();
-		Peca peca = dao.findById(idLivro);
-		// verifica se existe um carrinho na sessao
+		Peca peca = dao.findById(idPeca);
 		if (Sessao.getInstance().getAttribute("carrinho") == null) {
-			// adiciona um carrinho (de itens de venda) na sessao
 			Sessao.getInstance().setAttribute("carrinho", 
 					new ArrayList<ItemVenda>());
 		}
 		
-		// obtendo o carrinho da sessao
-		List<ItemVenda> carrinho = 
-				(ArrayList<ItemVenda>) Sessao.getInstance().getAttribute("carrinho");
+		List<ItemVenda> carrinho =(ArrayList<ItemVenda>) Sessao.getInstance().getAttribute("carrinho");
 		
-		// criando um item de venda para adicionar no carrinho
 		ItemVenda item = new ItemVenda();
 		item.setPeca(peca);
 		item.setValor(peca.getPreco());
-		
-		// adicionando o item no carrinho (variavel local) 
 		carrinho.add(item);
-		
-		// atualizando o carrinho na sessao
 		Sessao.getInstance().setAttribute("carrinho", carrinho);
 		
-		Util.addInfoMessage("Livro adicionado no carrinho. "
+		Util.addInfoMessage("Peca adicionada no carrinho. "
 				+ "Quantidade de Itens: " + carrinho.size());
 		
 	}

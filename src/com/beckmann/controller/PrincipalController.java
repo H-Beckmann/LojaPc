@@ -16,7 +16,7 @@ public class PrincipalController implements Serializable {
 	private Usuario usuarioLogado = null;
 
 	public Usuario getUsuarioLogado() {
-		if (usuarioLogado == null) // buscando o usuario da sessao
+		if (usuarioLogado == null)
 			usuarioLogado = (Usuario) Sessao.getInstance().getAttribute("usuarioLogado");			
 		return usuarioLogado;
 	}

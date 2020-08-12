@@ -8,7 +8,14 @@ public class Usuario extends Entity<Usuario>{
 	private String login;
 	private String senha;
 	private LocalDate dataNascimento;
+	private TipoUsuario tipoUsuario;
 	
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
 	public String getNome() {
 		return nome;
 	}

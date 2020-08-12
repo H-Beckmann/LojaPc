@@ -1,14 +1,14 @@
 body{
-	background: #000000;
+	background: #343a40;
 	padding-top: 10%;
 }
 
 .wdi-red{
-	color: #000000;
+	color: #343a40;
 }
 
 .login-box{
-	background: #fff;
+	background: #6c757d;
 	padding: 50px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

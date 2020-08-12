@@ -4,69 +4,78 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-<ui:composition template="principal.xhtml">
+<ui:composition template="index.xhtml">
 <ui:define name="conteudo">
 
 	<h:messages 
-		errorStyle="color:red" 
+		errorStyle="color:black" 
 		warnStyle="color:orange" 
 		infoStyle="color:green"
-		globalOnly="false"/>
+		globalOnly="false"
+		style="list-style-type: none"/>
 		
-	<h1>.:Cadastro de Peças:.</h1>
+	<h1 class="text-center wdi-red">Cadastro de peças</h1>
+	<hr />
 	<h:form>
-		<h:panelGrid columns="2">
-		<h:outputLabel value="Nome:" />
-			<h:panelGroup>
-				<h:inputText 
-					id="itNome" 
-					value="#{cadastroPecaController.entity.nome}" />
-				<h:message for="itNome" style="color:red"/>
-			</h:panelGroup>
-		
-			<h:outputLabel value="Descrição:" />
-			<h:panelGroup>
-				<h:inputText 
-					id="itDescricao" 
-					value="#{cadastroPecaController.entity.desc}" />
-				<h:message for="itDescricao" style="color:red"/>
-			</h:panelGroup>
-
-			<h:outputLabel value="Preço:" />
-			<h:panelGroup>
-				<h:inputText 
-					id="itPreco" 
-					value="#{cadastroPecaController.entity.preco}" />
-				<h:message for="itPreco" style="color:red"/>
-			</h:panelGroup>	
-			
-			<h:outputLabel value="Categoria:" />
-			<h:selectOneMenu 
-				value="#{cadastroPecaController.entity.categoriaPeca}">
-				<f:selectItems 
-					value="#{cadastroPecaController.listaCategoria}"
-							var="tipo" 
-							itemLabel="#{tipo.label}"/>
-			</h:selectOneMenu>							
-
-		
-		</h:panelGrid>
-		<h:commandButton value="Incluir"
-			disabled="#{cadastroPecaController.entity.id != null}"
-			actionListener="#{cadastroPecaController.incluir}" />
-		<h:commandButton value="Alterar"
-			disabled="#{cadastroPecaController.entity.id == null}"
-			actionListener="#{cadastroPecaController.alterar}" />
-		<h:commandButton value="Excluir"
-			disabled="#{cadastroPecaController.entity.id == null}"
-			actionListener="#{cadastroPecaController.remover}" >
-			<f:ajax execute="@this" render="@form formDataTable"/>
-		</h:commandButton>
-		<h:commandButton value="Limpar" 
-			actionListener="#{cadastroPecaController.limpar}">
-			<f:ajax execute="@this" render="@form"/>
-		</h:commandButton>		
-	</h:form>
-</ui:define>
-</ui:composition>
+		<div class="form-row" >
+						<div class="col-md-8">
+							<h:outputLabel style="margin-bottom:0;" value="Nome:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo nome é obrigatório." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroPecaController.entity.nome}" />
+						</div>
+						
+						<div class="col-md-8">
+							<h:outputLabel style="margin-bottom:0;" value="Descriçao"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo descrição é obrigatório." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroPecaController.entity.desc}" />
+						</div>
+						
+						<div class="col-md-8">
+							<h:outputLabel style="margin-bottom:0;" value="Preço:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo preço é obrigatório." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroPecaController.entity.preco}" />
+						</div>
+						<div class="col-md-8" style="margin-bottom:10px">
+							<h:outputLabel style="margin-bottom:0;" value="Estoque:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo estoque é obrigatório." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroPecaController.entity.estoque}" />
+						</div>
+						<div style="margin-bottom:10px" class="col-md-8">
+							<h:outputLabel value="Categoria:" />
+								<h:selectOneMenu 
+									value="#{cadastroPecaController.entity.categoriaPeca}">
+							<f:selectItems 
+								value="#{cadastroPecaController.listaCategoria}"
+								var="tipo" 
+								itemLabel="#{tipo.label}"/>
+							</h:selectOneMenu>
+						</div>						
+						</div>
+						<div style="display:flex;margin-bottom:10px">
+						<h:commandButton value="Incluir"
+							styleClass="btn btn-secondary"
+							actionListener="#{cadastroPecaController.incluir}" />
+        				<h:commandButton value="Alterar"
+        					styleClass="btn btn-secondary"
+            				disabled="#{cadastroPecaController.entity.id == null}"
+            				actionListener="#{cadastroPecaController.alterar}" />
+        				<h:commandButton value="Excluir"
+        					styleClass="btn btn-secondary"
+           					disabled="#{cadastroPecaController.entity.id == null}"
+           					actionListener="#{cadastroPecaController.remover}" >
+            				<f:ajax execute="@this" render="@form formDataTable"/>
+        				</h:commandButton>
+        				<h:commandButton value="Limpar" 
+        					styleClass="btn btn-secondary"
+            				actionListener="#{cadastroPecaController.limpar}">
+            				<f:ajax execute="@this" render="@form"/>
+        				</h:commandButton>
+        				</div>
+				</h:form>
+		</ui:define>
+	</ui:composition>
 </html>

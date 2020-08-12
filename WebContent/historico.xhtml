@@ -4,11 +4,12 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<ui:composition template="principal.xhtml">
+<ui:composition template="index.xhtml">
 <ui:define name="conteudo">
 
 	<center>
 		<h1>Histórico de Vendas</h1>
+		<hr />
 
 		<h:form>
 			<h:messages style="color:red" />
@@ -22,7 +23,7 @@
 				<h:column>
 					<f:facet name="header">Data</f:facet>
 					<h:outputLabel value="#{obj.data}">
-						<f:convertDateTime type="localDate" pattern="dd-MM-yyyy"/>
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
 					</h:outputLabel>
 				</h:column>
 				
@@ -40,7 +41,7 @@
 				
 				<h:column>
 					<f:facet name="header">Ação</f:facet>
-					<h:commandButton value="Detalhes ..." action="#{historicoController.detalhes(obj)}">
+					<h:commandButton styleClass="btn btn-secondary" value="Detalhes ..." action="#{historicoController.detalhes(obj)}">
 						<f:ajax execute="@this" render="@none"/>
 					</h:commandButton>
 				</h:column>

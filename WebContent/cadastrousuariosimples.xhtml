@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:composition template="index.xhtml">
+<ui:define name="conteudo">
+
+	<h:messages 
+		errorStyle="color:black" 
+		warnStyle="color:orange" 
+		infoStyle="color:green"
+		globalOnly="false"
+		style="list-style-type: none"/>
+		
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-6 col-md-auto login-box">		
+				<h1 class="text-center wdi-red">Registrar</h1>
+				<hr />
+				<h:form>
+					<div class="form-row">
+					
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Nome:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo nome não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.nome}" />
+						</div>
+						
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Login:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo login não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.login}" />
+						</div>
+						
+						<div class="col-md-12">
+							<h:outputLabel style="margin-bottom:0;" value="Senha:"  styleClass="wdi-red"/>
+							<h:inputSecret required="true"
+					requiredMessage="O campo senha não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.senha}" />
+						</div>
+						
+						<div class="col-md-12" style="margin-bottom:10px">
+							<h:outputLabel style="margin-bottom:0;" value="Data de Nascimento:"  styleClass="wdi-red"/>
+							<h:inputText required="true"
+					requiredMessage="O campo data de nascimento não pode ser nulo." styleClass="form-control form-control-lg flat-input"
+								value="#{cadastroUsuarioController.entity.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" 
+									   type="localDate"/> </h:inputText>
+						</div>
+						
+						
+						<h:commandButton value="Registrar"
+							styleClass="btn btn-secondary"
+							actionListener="#{cadastroUsuarioController.incluir}"
+							action="login.xhtml?faces-redirect=true" />
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+	</ui:define>
+</ui:composition>
+</html>
