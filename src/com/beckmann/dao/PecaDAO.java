@@ -56,7 +56,7 @@ public class PecaDAO extends DAO<Peca> {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE peca ");
-		sql.append("	SET nome=?, description=?, preco=?, categoria=? ");
+		sql.append("	SET nome=?, description=?, preco=?, categoria=?, estoque=? ");
 		sql.append("WHERE ");
 		sql.append("	id = ? ");
 		
@@ -67,7 +67,8 @@ public class PecaDAO extends DAO<Peca> {
 			stat.setString(2, peca.getDesc());
 			stat.setFloat(3, peca.getPreco());
 			stat.setInt(4, peca.getCategoriaPeca().getId());
-			stat.setInt(5, peca.getId());
+			stat.setInt(5, peca.getEstoque());
+			stat.setInt(6, peca.getId());
 			
 			stat.execute();
 			
